@@ -469,7 +469,9 @@ namespace AIS
 	char Message::getLetter(int pos) const
 	{
 		int x = (pos * 6) >> 3, y = (pos * 6) & 7;
-		uint16_t w = (data[x] << 8) | data[x + 1];
+		uint16_t w = (data[x] << 8);
+		if (x + 1 < 128)
+			w |= data[x + 1];
 
 		const int mask = (1 << 6) - 1;
 		int l = (w >> (16 - 6 - y)) & mask;
